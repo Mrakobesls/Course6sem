@@ -1,5 +1,4 @@
-﻿using Data;
-using ShemTeh.Data.UnitOfWork;
+﻿using Data.UnitOfWork;
 
 namespace Business.Services
 {

@@ -1,7 +1,6 @@
-﻿using Common.Hashing;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 
-namespace ShemTeh.Business.Hashing
+namespace Common.Hashing
 {
     public class PasswordCrypt : IPasswordCrypt
     {

@@ -1,0 +1,30 @@
+﻿@using Application.Models.Room
+@model RoomListResponse
+
+<div>
+    @Html.ActionLink("Создать комнату", "CreateRoom", "Room", null, new { type = "button", @class = "btn btn-outline-dark" })
+</div>
+<br />
+<div class="text-center">
+    <table class="table legend">
+        <tr>
+            <th>Номер</th>
+            <th>Название</th>
+            <th>Описание</th>
+        </tr>
+        @{
+            int number = 0;
+            foreach (var room in Model.Rooms)
+            {
+                <tr>
+                    <td>@(++number)</td>
+                    <td>@room.Name</td>
+                    <td>@room.Description</td>
+                    <td>
+                        @Html.ActionLink("Редактировать комнату", "EditRoom", "Room", new { roomId = room.Id }, new { type = "button", @class = "btn btn-outline-dark" })
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>

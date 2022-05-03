@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Data.Model;
+using Data.Models;
 
 namespace Data
 {
@@ -66,19 +66,31 @@ namespace Data
                     }
                 });
 
-            //modelBuilder.Entity<User>()
-            //        .HasData(new User[] {
-            //            new User
-            //            { 
-            //                Id = 1,
-            //                Login = "Admin",
-            //                Email = "admin@admin.com",
-            //                Password = "10000.E1oWoDmucer3gKs31Cd1NA==.acfwsZcyNgPBDPw7KDCwtPp6g7lVZCYfVBMJppZtaQQ=",
-            //                Name = "Admin",
-            //                Surname = "Admin",
-            //                RoleId = (int)Data.Model.Enum.Roles.Admin
-            //            }
-            //        });
+            modelBuilder.Entity<Room>()
+                .HasData(new Room[] {
+                    new Room
+                    {
+                        Id = 1,
+                        Name = "Улица",
+                        Description = "Пространство вне объекта"
+                    }
+                });
+
+            modelBuilder.Entity<User>()
+                    .HasData(new User[] {
+                        new User
+                        {
+                            Id = 1,
+                            Login = "Admin",
+                            Email = "admin@admin.com",
+                            Password = "10000.E1oWoDmucer3gKs31Cd1NA==.acfwsZcyNgPBDPw7KDCwtPp6g7lVZCYfVBMJppZtaQQ=",
+                            Name = "Admin",
+                            Surname = "Admin",
+                            Patronymic = "Admin",
+                            CurrentRoomId = 1,
+                            RoleId = (int)Common.Enum.Roles.Admin
+                        }
+                    });
         }
     }
 }

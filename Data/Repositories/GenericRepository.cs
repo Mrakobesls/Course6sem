@@ -27,11 +27,12 @@
         }
         public T Update(T newEnt)
         {
+            AppDbContext.ChangeTracker.Clear();
             return AppDbContext.Update(newEnt).Entity;
         }
-        public void Delete(T ent)
+        public void Delete(int id)
         {
-            AppDbContext.Remove(ent);
+            AppDbContext.Remove(id);
         }
     }
 }

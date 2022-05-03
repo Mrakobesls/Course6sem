@@ -7,6 +7,6 @@
         T Read(int id);
         IQueryable<T> ReadAll();
         T Update(T newUser);
-        void Delete(T ent);
+        void Delete(int id);
     }
 }

@@ -1,10 +1,24 @@
+using Business.Services;
+using Common.Hashing;
 using Data;
+using Data.UnitOfWork;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IAccessLevelService, AccessLevelService>();
+builder.Services.AddScoped<ICheckpointService, CheckpointService>();
+builder.Services.AddScoped<IMonthUserRoomTimeSpentService, MonthUserRoomTimeSpentService>();
+builder.Services.AddScoped<IPassageDateService, PassageDateService>();
+builder.Services.AddScoped<IPositionService, PositionService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IRoomService, RoomService>();
+builder.Services.AddScoped<IRoomTimeSpentService, RoomTimeSpentService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPasswordCrypt, PasswordCrypt>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -29,6 +43,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

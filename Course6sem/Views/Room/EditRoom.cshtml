@@ -1,0 +1,25 @@
+﻿@using Application.Models.Room
+@model EditRoomRequest
+
+<h2>Редактирование комнаты</h2>
+
+@using (Html.BeginForm("EditRoom", "Room", FormMethod.Post))
+{
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+    <div>
+        @Html.HiddenFor(m => m.Id)
+        <div class="form-group">
+            @Html.ValidationMessageFor(m => m.Name)
+            @Html.LabelFor(m => m.Name, "Название")
+            @Html.EditorFor(m => m.Name)
+        </div>
+        <div class="form-group">
+            @Html.ValidationMessageFor(m => m.Description)
+            @Html.LabelFor(m => m.Description, "Описание")
+            @Html.EditorFor(m => m.Description)
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Применить" class="btn btn-outline-dark" />
+        </div>
+    </div>
+}

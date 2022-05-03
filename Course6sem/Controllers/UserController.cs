@@ -1,4 +1,4 @@
-﻿using Business.Model;
+﻿using Business.Models;
 using Business.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -11,9 +11,9 @@ namespace ShemTeh.App.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
-        private readonly IRoleService _roleService;
+        private readonly IAccessLevelService _roleService;
 
-        public UserController(IUserService userService, IRoleService roleService)
+        public UserController(IUserService userService, IAccessLevelService roleService)
         {
             _userService = userService;
             _roleService = roleService;

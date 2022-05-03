@@ -1,6 +1,6 @@
-﻿using Business.Model;
+﻿using Business.Models;
 using Common.Hashing;
-using ShemTeh.Data.UnitOfWork;
+using Data.UnitOfWork;
 
 namespace Business.Services
 {
@@ -14,7 +14,7 @@ namespace Business.Services
             _crypt = crypt;
         }
 
-        public int Create(User entity)
+        public User Create(User entity)
         {
             var existingUser = Uow.Users
                 .ReadAll()
@@ -34,7 +34,7 @@ namespace Business.Services
 
             Uow.SaveChanges();
 
-            return entityDb.Id;
+            return entityDb;
         }
 
         public User Authenticate(string login, string password)

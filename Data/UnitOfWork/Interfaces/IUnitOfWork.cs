@@ -1,8 +1,7 @@
-﻿using Data;
-using Data.Model;
+﻿using Data.Models;
 using Data.Repositories;
 
-namespace ShemTeh.Data.UnitOfWork
+namespace Data.UnitOfWork
 {
     public interface IUnitOfWork
     {

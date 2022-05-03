@@ -1,34 +1,30 @@
-﻿using Business.Model;
-using ShemTeh.Data.UnitOfWork;
+﻿using Business.Models;
+using Data.UnitOfWork;
 
 namespace Business.Services
 {
-    public class RoleService : IRoleService
+    public class RoleService : GenericService, IRoleService
     {
-        private IUnitOfWork _uow;
-        public RoleService(IUnitOfWork unitOfWork)
+        public RoleService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        { }
+
+        public Role Create(Role entity)
         {
-            _uow = unitOfWork;
-        }
+            var dbUser = Uow.Roles.Create(entity);
 
+            Uow.SaveChanges();
 
-        public int Create(Role entity)
-        {
-            var dbUser = _uow.Roles.Create(entity);
-
-            _uow.SaveChanges();
-
-            return dbUser.Id;
+            return dbUser;
         }
 
         public Role Get(int id)
         {
-            return _uow.Roles.Read(id);
+            return Uow.Roles.Read(id);
         }
 
         public List<Role> GetAll()
         {
-            return _uow.Roles.ReadAll()
+            return Uow.Roles.ReadAll()
                     .Select(c => (Role)c).ToList();
         }
 
@@ -39,9 +35,9 @@ namespace Business.Services
 
         public void Update(Role entity)
         {
-            _uow.Roles.Update(entity);
+            Uow.Roles.Update(entity);
 
-            _uow.SaveChanges();
+            Uow.SaveChanges();
         }
     }
 }

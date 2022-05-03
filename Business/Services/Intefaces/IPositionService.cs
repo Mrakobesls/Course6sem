@@ -2,7 +2,7 @@
 
 namespace Business.Services
 {
-    public interface IRoleService : IGenericService<Role>
+    public interface IPositionService : IGenericService<Position>
     {
     }
 }

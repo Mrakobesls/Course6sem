@@ -1,8 +1,7 @@
-﻿using Data;
-using Data.Model;
+﻿using Data.Models;
 using Data.Repositories;
 
-namespace ShemTeh.Data.UnitOfWork
+namespace Data.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
@@ -35,7 +34,7 @@ namespace ShemTeh.Data.UnitOfWork
 
 
         private IGenericRepository<Role> _roles;
-        public IGenericRepository<Role> Roles 
+        public IGenericRepository<Role> Roles
             => _roles ??= new GenericRepository<Role>(_context);
 
 
