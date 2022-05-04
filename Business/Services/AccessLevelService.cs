@@ -39,5 +39,11 @@ namespace Business.Services
 
             Uow.SaveChanges();
         }
+
+        public AccessLevel ReadByName(string name)
+        {
+            return Uow.AccessLevels.ReadAll()
+                        .FirstOrDefault(r => r.Name == name);
+        }
     }
 }

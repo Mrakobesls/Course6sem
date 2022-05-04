@@ -39,5 +39,11 @@ namespace Business.Services
 
             Uow.SaveChanges();
         }
+
+        public Position ReadByName(string name)
+        {
+            return Uow.Positions.ReadAll()
+                        .FirstOrDefault(r => r.Name == name);
+        }
     }
 }

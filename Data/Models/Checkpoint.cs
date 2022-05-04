@@ -16,7 +16,7 @@ namespace Data.Models
         [Column(TypeName = "nvarchar(100)")]
         public string Description { get; set; }
 
-        public virtual ICollection<AccessLevel> AccessLevels { get; set; }
-        public virtual ICollection<Room> Rooms { get; set; }
+        public virtual ICollection<AccessLevel> AccessLevels { get; set; } = new List<AccessLevel>();
+        public virtual ICollection<Room> Rooms { get; set; } = new List<Room>();
     }
 }

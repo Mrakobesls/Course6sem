@@ -70,7 +70,8 @@ namespace Application.Controllers
             {
                 Id = room.Id,
                 Name = room.Name,
-                Description = room.Description
+                Description = room.Description,
+                Checkpoints = _roomService.GetRoomCheckpoints(room.Id)
             };
 
             return View(editRoomRequest);

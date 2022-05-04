@@ -1,0 +1,28 @@
+﻿@using Application.Models.AccessLevel
+@model AccessLevelListResponse
+
+<div>
+    @Html.ActionLink("Создать уровень доступа", "CreateAccessLevel", "AccessLevel", null, new { type = "button", @class = "btn btn-outline-dark" })
+</div>
+<br />
+<div class="text-center">
+    <table class="table legend">
+        <tr>
+            <th>Номер</th>
+            <th>Название</th>
+        </tr>
+        @{
+            int number = 0;
+            foreach (var accessLevel in Model.AccessLevels)
+            {
+                <tr>
+                    <td>@(++number)</td>
+                    <td>@accessLevel.Name</td>
+                    <td>
+                        @Html.ActionLink("Редактировать уровень доступа", "EditAccessLevel", "AccessLevel", new { accessLevelId = accessLevel.Id }, new { type = "button", @class = "btn btn-outline-dark" })
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>

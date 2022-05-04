@@ -52,6 +52,17 @@ namespace Data
                 .HasForeignKey(mrts => mrts.RoomId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            //modelBuilder.Entity<Checkpoint>()
+            //    .HasOne(mrts => mrts.FirstRoom)
+            //    .WithMany(u => u.Checkpoints)
+            //    .HasForeignKey(mrts => mrts.FirstRoomId)
+            //    .OnDelete(DeleteBehavior.Restrict);
+            //modelBuilder.Entity<Checkpoint>()
+            //    .HasOne(mrts => mrts.SecondRoom)
+            //    .WithMany(u => u.Checkpoints)
+            //    .HasForeignKey(mrts => mrts.SecondRoomId)
+            //    .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<Role>()
                 .HasData(new Role[] {
                     new Role

@@ -1,0 +1,28 @@
+﻿@using Application.Models.Position
+@model PositionListResponse
+
+<div>
+    @Html.ActionLink("Создать должность", "CreatePosition", "Position", null, new { type = "button", @class = "btn btn-outline-dark" })
+</div>
+<br />
+<div class="text-center">
+    <table class="table legend">
+        <tr>
+            <th>Номер</th>
+            <th>Название</th>
+        </tr>
+        @{
+            int number = 0;
+            foreach (var position in Model.Positions)
+            {
+                <tr>
+                    <td>@(++number)</td>
+                    <td>@position.Name</td>
+                    <td>
+                        @Html.ActionLink("Редактировать должность", "EditPosition", "Position", new { positionId = position.Id }, new { type = "button", @class = "btn btn-outline-dark" })
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>

@@ -1,0 +1,28 @@
+﻿@using Application.Models.Checkpoint
+@model CheckpointListResponse
+
+<div>
+    @Html.ActionLink("Создать КПП", "CreateCheckpoint", "Checkpoint", null, new { type = "button", @class = "btn btn-outline-dark" })
+</div>
+<br />
+<div class="text-center">
+    <table class="table legend">
+        <tr>
+            <th>Номер</th>
+            <th>Название</th>
+        </tr>
+        @{
+            int number = 0;
+            foreach (var Checkpoint in Model.Checkpoints)
+            {
+                <tr>
+                    <td>@(++number)</td>
+                    <td>@Checkpoint.Name</td>
+                    <td>
+                        @Html.ActionLink("Редактировать КПП", "EditCheckpoint", "Checkpoint", new { CheckpointId = Checkpoint.Id }, new { type = "button", @class = "btn btn-outline-dark" })
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>

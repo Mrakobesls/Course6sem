@@ -1,5 +1,6 @@
 ﻿using Business.Models;
 using Data.UnitOfWork;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Services
 {
@@ -45,9 +46,18 @@ namespace Business.Services
 
         public Room ReadByName(string name)
         {
-            var dbRoom = Uow.Rooms.ReadAll()
-                           .FirstOrDefault(r => r.Name == name);
-            return dbRoom;
+            return Uow.Rooms.ReadAll()
+                        .FirstOrDefault(r => r.Name == name);
+        }
+
+        public List<Checkpoint> GetRoomCheckpoints(int id)
+        {
+            return Uow.Rooms.ReadAll()
+                    .Include(r=>r.Checkpoints)
+                    .Where(r=>r.Id == id)
+                    .SelectMany(r=>r.Checkpoints)
+                    .Select(c=>(Checkpoint)c)
+                    .ToList();
         }
     }
 }
