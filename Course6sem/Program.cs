@@ -13,11 +13,13 @@ builder.Services.AddScoped<IAccessLevelService, AccessLevelService>();
 builder.Services.AddScoped<ICheckpointService, CheckpointService>();
 builder.Services.AddScoped<IMonthUserRoomTimeSpentService, MonthUserRoomTimeSpentService>();
 builder.Services.AddScoped<IPassageDateService, PassageDateService>();
+builder.Services.AddScoped<IPassageService, PassageService>();
 builder.Services.AddScoped<IPositionService, PositionService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddScoped<IRoomTimeSpentService, RoomTimeSpentService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IBackupService, BackupService>();
 builder.Services.AddScoped<IPasswordCrypt, PasswordCrypt>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();

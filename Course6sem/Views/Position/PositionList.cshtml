@@ -21,6 +21,9 @@
                     <td>
                         @Html.ActionLink("Редактировать должность", "EditPosition", "Position", new { positionId = position.Id }, new { type = "button", @class = "btn btn-outline-dark" })
                     </td>
+                    <td>
+                        @Html.ActionLink("Удалить должность", "DeletePosition", "Position", new { positionId = position.Id }, new { type = "button", @class = "btn btn-outline-dark", onclick = "return confirm('После удаления оно удалиться');" })
+                    </td>
                 </tr>
             }
         }

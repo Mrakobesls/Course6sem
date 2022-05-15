@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ShemTeh.App.Models.User
+namespace Application.Models.User
 {
     public class LoginModel
     {

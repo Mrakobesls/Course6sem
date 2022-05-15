@@ -7,6 +7,7 @@
         public string Description { get; set; }
         public int FirstRoomId { get; set; }
         public int SecondRoomId { get; set; }
+        public List<int> AccessLevelsId { get; set; }
 
         public static implicit operator Checkpoint(Data.Models.Checkpoint checkpoint)
         {
@@ -22,7 +23,10 @@
                                     : checkpoint.Rooms.ToList()[0].Id,
                     SecondRoomId = checkpoint.Rooms.Count() == 0
                                     ? -1
-                                    : checkpoint.Rooms.ToList()[1].Id,
+                                    : checkpoint.Rooms.ToList()[^1].Id,
+                    AccessLevelsId = checkpoint.AccessLevels.Select(x => x.Id)
+                                        .ToList()
+
                 };
         }
 

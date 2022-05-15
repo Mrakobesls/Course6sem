@@ -5,15 +5,15 @@ namespace Data
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Position> Positions { get; set; }
-        public DbSet<AccessLevel> AccessLevel { get; set; }
-        public DbSet<Room> Rooms { get; set; }
+        public DbSet<AccessLevel> AccessLevels { get; set; }
         public DbSet<Checkpoint> Checkpoints { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<MonthUserRoomTimeSpent> MonthUserRoomTimeSpents { get; set; }
         public DbSet<PassageDate> PassageDates { get; set; }
         public DbSet<RoomTimeSpent> RoomTimeSpents { get; set; }
-        public DbSet<MonthUserRoomTimeSpent> MonthRoomTimeSpents { get; set; }
 
         public AppDbContext()
         { }
@@ -77,6 +77,15 @@ namespace Data
                     }
                 });
 
+            modelBuilder.Entity<Position>()
+                .HasData(new Position[] {
+                    new Position
+                    {
+                        Id = 1,
+                        Name = "Program admin"
+                    }
+                });
+
             modelBuilder.Entity<Room>()
                 .HasData(new Room[] {
                     new Room
@@ -99,6 +108,7 @@ namespace Data
                             Surname = "Admin",
                             Patronymic = "Admin",
                             CurrentRoomId = 1,
+                            PositionId = 1,
                             RoleId = (int)Common.Enum.Roles.Admin
                         }
                     });

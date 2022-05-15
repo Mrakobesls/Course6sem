@@ -12,8 +12,13 @@
         public string Surname { get; set; }
         public string Patronymic { get; set; }
 
+        public bool IsDisabled { get; set; }
+
         public int RoleId { get; set; }
         public int CurrentRoomId { get; set; }
+        public int PositionId { get; set; }
+        public List<int> AccessLevelsId { get; set; } = new List<int>();
+
 
         public static implicit operator User(Data.Models.User user)
         {
@@ -28,8 +33,12 @@
                     Name = user.Name,
                     Surname = user.Surname,
                     Patronymic = user.Patronymic,
+                    IsDisabled = user.IsDisabled,
                     RoleId = user.RoleId,
-                    CurrentRoomId = user.CurrentRoomId
+                    CurrentRoomId = user.CurrentRoomId,
+                    PositionId = user.PositionId,
+                    AccessLevelsId = user.AccessLevels.Select(al => al.Id)
+                                            .ToList()
                 };
         }
 
@@ -47,8 +56,10 @@
                     Name = user.Name,
                     Surname = user.Surname,
                     Patronymic = user.Patronymic,
+                    IsDisabled = user.IsDisabled,
                     RoleId = user.RoleId,
-                    CurrentRoomId = user.CurrentRoomId
+                    CurrentRoomId = user.CurrentRoomId,
+                    PositionId = user.PositionId
                 };
         }
     }

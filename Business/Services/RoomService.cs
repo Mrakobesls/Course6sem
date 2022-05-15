@@ -33,7 +33,6 @@ namespace Business.Services
         public void Delete(int id)
         {
             Uow.Rooms.Delete(id);
-
             Uow.SaveChanges();
         }
 
@@ -58,6 +57,14 @@ namespace Business.Services
                     .SelectMany(r=>r.Checkpoints)
                     .Select(c=>(Checkpoint)c)
                     .ToList();
+        }
+
+        public bool IsRoomEmpty(int roomId)
+        {
+            return Uow.Rooms.ReadAll()
+                    .Include(r=>r.Users)
+                    .Single(r=>r.Id == roomId)
+                    .Users.Any();
         }
     }
 }

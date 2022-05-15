@@ -25,6 +25,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        @if (User?.Identity?.IsAuthenticated ?? false)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Passage" asp-action="PassCheckpoint">Пройти КПП</a>
+                            </li>
+                        }
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
@@ -38,6 +44,12 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="AccessLevel" asp-action="AccessLevels">Уровни доступа</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Users">Пользователи</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Backups">Резервные копии</a>
                             </li>
                         }
                     </ul>

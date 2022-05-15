@@ -1,0 +1,31 @@
+﻿@using Application.Models.Admin
+@model BackupListResponse
+
+<div>
+    @Html.ActionLink("Создать резервную копию", "CreateBackup", "Admin", null, new { type = "button", @class = "btn btn-outline-dark" })
+</div>
+<br />
+<div class="text-center">
+    <table class="table legend">
+        <tr>
+            <th>Номер</th>
+            <th>Название</th>
+        </tr>
+        @{
+            int number = 0;
+            foreach (var backup in Model.Backups)
+            {
+                <tr>
+                    <td>@(++number)</td>
+                    <td>@backup.Name</td>
+                    <td>
+                        @Html.ActionLink("Удалить резервную копию", "DeleteBackup", "Admin", new { backupName = backup.Name }, new { type = "button", @class = "btn btn-outline-dark", onclick = "return confirm('После удаления оно удалиться');" })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Применить резервную копию", "MakeRestore", "Admin", new { backupName = backup.Name }, new { type = "button", @class = "btn btn-outline-dark", onclick = "return confirm('Резервная копия будет применена');" })
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>

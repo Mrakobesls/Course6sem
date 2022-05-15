@@ -14,5 +14,6 @@ namespace Application.Models.Checkpoint
 
         [Required(ErrorMessage = "Не указана комната")]
         public int SecondRoomId { get; set; }
+        public List<int> AccessLevelsId { get; set; } = new List<int>();
     }
 }

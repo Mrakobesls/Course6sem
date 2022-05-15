@@ -2,29 +2,48 @@
 
 @model CreateCheckpointRequest
 
-<h2>Создание уровня доступа</h2>
+<h2>Создание КПП</h2>
 
 @using (Html.BeginForm("CreateCheckpoint", "Checkpoint", FormMethod.Post))
 {
     <div class="validation" asp-validation-summary="ModelOnly"></div>
     <div>
         <div class="form-group">
-            @Html.ValidationMessageFor(m => m.Name)
             @Html.LabelFor(m => m.Name, "Название")
             @Html.EditorFor(m => m.Name)
+            @Html.ValidationMessageFor(m => m.Name)
         </div>
         <div class="form-group">
-            @Html.ValidationMessageFor(m => m.Description)
             @Html.LabelFor(m => m.Description, "Описание")
             @Html.EditorFor(m => m.Description)
+            @Html.ValidationMessageFor(m => m.Description)
+        </div>
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(h => h.FirstRoomId, "Первая комната")
+            @Html.DropDownListFor(h => h.FirstRoomId,
+                new SelectList(ViewBag.Rooms, "Id", "Name").OrderBy(x=>x.Text))
         </div>
         <div class="form-group">
-               @Html.DropDownListFor(h => h.FirstRoomId,
-                    new SelectList(ViewBag.Rooms, "Id", "Name").OrderBy(x=>x.Text))
+            @Html.LabelFor(h => h.SecondRoomId, "Вторая комната")
+            @Html.DropDownListFor(h => h.SecondRoomId,
+                new SelectList(ViewBag.Rooms, "Id", "Name").OrderBy(x=>x.Text))
         </div>
-        <div class="form-group">
-               @Html.DropDownListFor(h => h.SecondRoomId,
-                    new SelectList(ViewBag.Rooms, "Id", "Name").OrderBy(x=>x.Text))
+        <br />
+        <div>Уровни доступа</div>
+        <div>
+            @{
+                <table class="table legend">
+                    @foreach (var accessLevel in ViewBag.AccessLevels)
+                    {
+                        <tr>
+                            <td>
+                                <input name="AccessLevelsId" type="checkbox" value="@accessLevel.Id" /> @accessLevel.Name<br />
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
         </div>
         <div class="form-group">
             <input type="submit" value="Создать" class="btn btn-outline-dark" />

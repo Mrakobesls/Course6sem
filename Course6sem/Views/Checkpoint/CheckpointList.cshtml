@@ -19,7 +19,10 @@
                     <td>@(++number)</td>
                     <td>@Checkpoint.Name</td>
                     <td>
-                        @Html.ActionLink("Редактировать КПП", "EditCheckpoint", "Checkpoint", new { CheckpointId = Checkpoint.Id }, new { type = "button", @class = "btn btn-outline-dark" })
+                        @Html.ActionLink("Редактировать КПП", "EditCheckpoint", "Checkpoint", new { checkpointId = Checkpoint.Id }, new { type = "button", @class = "btn btn-outline-dark" })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Удалить КПП", "DeleteCheckpoint", "Checkpoint", new { checkpointId = Checkpoint.Id }, new { type = "button", @class = "btn btn-outline-dark", onclick = "return confirm('После удаления оно удалиться');" })
                     </td>
                 </tr>
             }

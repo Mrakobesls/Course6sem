@@ -30,13 +30,13 @@ namespace Business.Services
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            Uow.Positions.Delete(id);
+            Uow.SaveChanges();
         }
 
         public void Update(Position entity)
         {
             Uow.Positions.Update(entity);
-
             Uow.SaveChanges();
         }
 

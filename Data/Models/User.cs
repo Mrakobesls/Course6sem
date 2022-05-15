@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Data.Models
 {
@@ -31,16 +32,24 @@ namespace Data.Models
         public string Patronymic { get; set; }
 
         [Required]
+        public bool IsDisabled { get; set; }
+
+        [Required]
         public int RoleId { get; set; }
         [Required]
         public int CurrentRoomId { get; set; }
+        [Required]
+        public int PositionId { get; set; }
 
-        [ForeignKey("RoleId")]
+        [ForeignKey(nameof(RoleId))]
         public virtual Role Role { get; set; }
-        [ForeignKey("CurrentRoomId")]
+        [ForeignKey(nameof(CurrentRoomId))]
         public virtual Room CurrentRoom { get; set; }
+        [ForeignKey(nameof(PositionId))]
+        public virtual Position Position { get; set; }
 
-        public virtual ICollection<AccessLevel> AccessLevels { get; set; }
-        public virtual ICollection<MonthUserRoomTimeSpent> MonthRoomTimeSpents { get; set; }
+        public virtual ICollection<AccessLevel> AccessLevels { get; set; } = new List<AccessLevel>();
+        [JsonIgnore]
+        public virtual ICollection<MonthUserRoomTimeSpent> MonthRoomTimeSpents { get; set; } = new List<MonthUserRoomTimeSpent>();
     }
 }

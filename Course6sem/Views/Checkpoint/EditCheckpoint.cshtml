@@ -19,12 +19,27 @@
             @Html.EditorFor(m => m.Description)
         </div>
         <div class="form-group">
-               @Html.DropDownListFor(h => h.FirstRoomId,
-                    new SelectList(ViewBag.Rooms, "Id", "Name").OrderBy(x=>x.Text))
+            @Html.DropDownListFor(h => h.FirstRoomId,
+                new SelectList(ViewBag.Rooms, "Id", "Name").OrderBy(x=>x.Text))
         </div>
         <div class="form-group">
-               @Html.DropDownListFor(h => h.SecondRoomId,
-                    new SelectList(ViewBag.Rooms, "Id", "Name").OrderBy(x=>x.Text))
+            @Html.DropDownListFor(h => h.SecondRoomId,
+                new SelectList(ViewBag.Rooms, "Id", "Name").OrderBy(x=>x.Text))
+        </div>
+        <br />
+        <div>Уровни доступа</div>
+        <div>
+            <table class="table legend">
+                @foreach (var accessLevel in ViewBag.AccessLevels)
+                {
+                    var checkState = Model.AccessLevelsId.Contains(@accessLevel.Id) ? "=checked" : ""; ;
+                    <tr>
+                        <td>
+                            <input name="AccessLevelsId" type="checkbox" @(Model.AccessLevelsId.Contains(@accessLevel.Id) ? "checked='checked'" : "") value="@accessLevel.Id" /> @accessLevel.Name<br />
+                        </td>
+                    </tr>
+                }
+            </table>
         </div>
         <div class="form-group">
             <input type="submit" value="Применить" class="btn btn-outline-dark" />

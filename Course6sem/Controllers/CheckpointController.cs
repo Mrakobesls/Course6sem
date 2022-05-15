@@ -8,14 +8,17 @@ namespace Application.Controllers
 {
     public class CheckpointController : Controller
     {
-        private readonly ICheckpointService _CheckpointService;
+        private readonly ICheckpointService _checkpointService;
         private readonly IRoomService _roomService;
+        private readonly IAccessLevelService _accessLevelsService;
 
-        public CheckpointController(ICheckpointService CheckpointService,
-            IRoomService roomService)
+        public CheckpointController(ICheckpointService checkpointService,
+            IRoomService roomService,
+            IAccessLevelService accessLevelsService)
         {
-            _CheckpointService = CheckpointService;
+            _checkpointService = checkpointService;
             _roomService = roomService;
+            _accessLevelsService = accessLevelsService;
         }
 
         public IActionResult Index()
@@ -29,7 +32,7 @@ namespace Application.Controllers
         {
             var viewModel = new CheckpointListResponse();
 
-            viewModel.Checkpoints = _CheckpointService.GetAll();
+            viewModel.Checkpoints = _checkpointService.GetAll();
 
             return View("CheckpointList", viewModel);
         }
@@ -39,6 +42,7 @@ namespace Application.Controllers
         public IActionResult CreateCheckpoint()
         {
             RoomsViewBag();
+            AccessLevelsViewBag();
             return View();
         }
 
@@ -47,25 +51,28 @@ namespace Application.Controllers
         public IActionResult CreateCheckpoint(CreateCheckpointRequest model)
         {
             RoomsViewBag();
+            AccessLevelsViewBag();
             if (ModelState.IsValid)
             {
-                if (_CheckpointService.ReadByName(model.Name) is null)
+                if (model.FirstRoomId == model.SecondRoomId)
                 {
-                    var Checkpoint = _CheckpointService.Create(new Checkpoint()
+                    ModelState.AddModelError("", "Комнаты должны быть разными");
+                    return View(model);
+                }
+                if (_checkpointService.ReadByName(model.Name) is null)
+                {
+                    var Checkpoint = _checkpointService.Create(new Checkpoint()
                     {
                         Name = model.Name,
                         Description = model.Description,
                         FirstRoomId = model.FirstRoomId,
-                        SecondRoomId = model.SecondRoomId
+                        SecondRoomId = model.SecondRoomId,
+                        AccessLevelsId = model.AccessLevelsId,
                     });
 
                     return RedirectToAction("EditCheckpoint", "Checkpoint", new { CheckpointId = Checkpoint.Id });
                 }
-                ModelState.AddModelError("", "Тест с таким названием уже существует");
-            }
-            else
-            {
-                ModelState.AddModelError("", "Валидация фигня");
+                ModelState.AddModelError("", "Комната с таким названием уже существует");
             }
 
             return View(model);
@@ -76,7 +83,8 @@ namespace Application.Controllers
         public IActionResult EditCheckpoint(int checkpointId)
         {
             RoomsViewBag();
-            var checkpoint = _CheckpointService.Get(checkpointId);
+            AccessLevelsViewBag();
+            var checkpoint = _checkpointService.Get(checkpointId);
 
             var editCheckpointRequest = new EditCheckpointRequest
             {
@@ -84,7 +92,8 @@ namespace Application.Controllers
                 Name = checkpoint.Name,
                 Description = checkpoint.Description,
                 FirstRoomId = checkpoint.FirstRoomId,
-                SecondRoomId = checkpoint.SecondRoomId
+                SecondRoomId = checkpoint.SecondRoomId,
+                AccessLevelsId = checkpoint.AccessLevelsId,
             };
 
             return View(editCheckpointRequest);
@@ -95,19 +104,26 @@ namespace Application.Controllers
         public IActionResult EditCheckpoint(EditCheckpointRequest model)
         {
             RoomsViewBag();
+            AccessLevelsViewBag();
             if (ModelState.IsValid)
             {
-                var CheckpointByName = _CheckpointService.ReadByName(model.Name);
+                if (model.FirstRoomId == model.SecondRoomId)
+                {
+                    ModelState.AddModelError("", "Комнаты должны быть разными");
+                    return View(model);
+                }
+                var CheckpointByName = _checkpointService.ReadByName(model.Name);
 
                 if (CheckpointByName is null || CheckpointByName.Id == model.Id)
                 {
-                    _CheckpointService.Update(new Checkpoint
+                    _checkpointService.Update(new Checkpoint
                     {
                         Id = model.Id,
                         Name = model.Name,
                         Description = model.Description,
                         FirstRoomId = model.FirstRoomId,
-                        SecondRoomId = model.SecondRoomId
+                        SecondRoomId = model.SecondRoomId,
+                        AccessLevelsId = model.AccessLevelsId,
                     });
 
                     return EditCheckpoint(model.Id);
@@ -118,11 +134,30 @@ namespace Application.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeleteCheckpoint(int checkpointId)
+        {
+            _checkpointService.Delete(checkpointId);
+
+            return Checkpoints();
+        }
+
         #region Private
 
         private void RoomsViewBag()
         {
             ViewBag.Rooms = _roomService.GetAll()
+                                    .Select(r => new
+                                    {
+                                        Id = r.Id,
+                                        Name = r.Name
+                                    }).ToList();
+        }
+
+        private void AccessLevelsViewBag()
+        {
+            ViewBag.AccessLevels = _accessLevelsService.GetAll()
                                     .Select(r => new
                                     {
                                         Id = r.Id,

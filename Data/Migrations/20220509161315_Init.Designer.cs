@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220503184906_init")]
-    partial class init
+    [Migration("20220509161315_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -174,6 +174,13 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Position");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Program admin"
+                        });
                 });
 
             modelBuilder.Entity("Data.Models.Role", b =>
@@ -279,6 +286,9 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Login")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
@@ -295,7 +305,7 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int?>("PositionId")
+                    b.Property<int>("PositionId")
                         .HasColumnType("int");
 
                     b.Property<int>("RoleId")
@@ -321,10 +331,12 @@ namespace Data.Migrations
                             Id = 1,
                             CurrentRoomId = 1,
                             Email = "admin@admin.com",
+                            IsDisabled = false,
                             Login = "Admin",
                             Name = "Admin",
                             Password = "10000.E1oWoDmucer3gKs31Cd1NA==.acfwsZcyNgPBDPw7KDCwtPp6g7lVZCYfVBMJppZtaQQ=",
                             Patronymic = "Admin",
+                            PositionId = 1,
                             RoleId = 1,
                             Surname = "Admin"
                         });
@@ -396,7 +408,7 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.PassageDate", b =>
                 {
-                    b.HasOne("Data.Models.Checkpoint", "Checkpoints")
+                    b.HasOne("Data.Models.Checkpoint", "Checkpoint")
                         .WithMany()
                         .HasForeignKey("CheckpointId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -408,7 +420,7 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Checkpoints");
+                    b.Navigation("Checkpoint");
 
                     b.Navigation("User");
                 });
@@ -448,9 +460,11 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Data.Models.Position", null)
+                    b.HasOne("Data.Models.Position", "Position")
                         .WithMany("Users")
-                        .HasForeignKey("PositionId");
+                        .HasForeignKey("PositionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Data.Models.Role", "Role")
                         .WithMany("Users")
@@ -459,6 +473,8 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.Navigation("CurrentRoom");
+
+                    b.Navigation("Position");
 
                     b.Navigation("Role");
                 });

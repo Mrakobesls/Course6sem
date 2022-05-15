@@ -6,5 +6,6 @@ namespace Business.Services
     {
         Room ReadByName(string name);
         List<Checkpoint> GetRoomCheckpoints(int id);
+        bool IsRoomEmpty(int roomId);
     }
 }

@@ -1,4 +1,4 @@
-﻿@using ShemTeh.App.Models.User
+﻿@using Application.Models.User
 @model LoginModel
 
 <h2>Вход на сайт</h2>
@@ -11,7 +11,7 @@
             <label>@Html.LabelFor(m=>m.Login, "Введите Login")</label>
             <br/>
             @Html.EditorFor(l=>l.Login)
-            @Html.ValidationMessageFor(m => m.Password)
+            @Html.ValidationMessageFor(m => m.Login)
         </div>
         <div class="form-group">
             <label>@Html.LabelFor(m=>m.Password, "Введите пароль")</label>

@@ -21,6 +21,9 @@
                     <td>
                         @Html.ActionLink("Редактировать уровень доступа", "EditAccessLevel", "AccessLevel", new { accessLevelId = accessLevel.Id }, new { type = "button", @class = "btn btn-outline-dark" })
                     </td>
+                    <td>
+                        @Html.ActionLink("Удалить уровень доступа", "DeleteAccessLevel", "AccessLevel", new { accessLevelId = accessLevel.Id }, new { type = "button", @class = "btn btn-outline-dark", onclick = "return confirm('После удаления оно удалиться');" })
+                    </td>
                 </tr>
             }
         }

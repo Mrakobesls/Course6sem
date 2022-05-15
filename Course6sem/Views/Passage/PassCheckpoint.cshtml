@@ -1,0 +1,24 @@
+﻿@using Application.Models.Passage
+
+@model PassCheckpointRequest
+
+<h2>Создание КПП</h2>
+
+<div>
+    Текущая комната: @Model.Room.Name
+</div>
+<br />
+@using (Html.BeginForm("PassCheckpoint", "Passage", FormMethod.Post))
+{
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+    <div>
+        <div class="form-group">
+            @Html.DropDownListFor(h => h.CheckpointId,
+                new SelectList(ViewBag.Checkpoints, "Id", "Name").OrderBy(x=>x.Text))
+        </div>
+        <br />
+        <div class="form-group">
+            <input type="submit" value="Пройти" class="btn btn-outline-dark" />
+        </div>
+    </div>
+}

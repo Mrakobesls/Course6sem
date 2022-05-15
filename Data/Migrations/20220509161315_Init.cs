@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -136,9 +136,10 @@ namespace Data.Migrations
                     Name = table.Column<string>(type: "nvarchar(20)", nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(30)", nullable: false),
                     Patronymic = table.Column<string>(type: "nvarchar(20)", nullable: false),
+                    IsDisabled = table.Column<bool>(type: "bit", nullable: false),
                     RoleId = table.Column<int>(type: "int", nullable: false),
                     CurrentRoomId = table.Column<int>(type: "int", nullable: false),
-                    PositionId = table.Column<int>(type: "int", nullable: true)
+                    PositionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -147,7 +148,8 @@ namespace Data.Migrations
                         name: "FK_User_Position_PositionId",
                         column: x => x.PositionId,
                         principalTable: "Position",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_User_Role_RoleId",
                         column: x => x.RoleId,
@@ -274,14 +276,18 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Role",
+                table: "Position",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "Admin" });
+                values: new object[] { 1, "Program admin" });
 
             migrationBuilder.InsertData(
                 table: "Role",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { 2, "Worker" });
+                values: new object[,]
+                {
+                    { 1, "Admin" },
+                    { 2, "Worker" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Room",
@@ -290,8 +296,8 @@ namespace Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "User",
-                columns: new[] { "Id", "CurrentRoomId", "Email", "Login", "Name", "Password", "Patronymic", "PositionId", "RoleId", "Surname" },
-                values: new object[] { 1, 1, "admin@admin.com", "Admin", "Admin", "10000.E1oWoDmucer3gKs31Cd1NA==.acfwsZcyNgPBDPw7KDCwtPp6g7lVZCYfVBMJppZtaQQ=", "Admin", null, 1, "Admin" });
+                columns: new[] { "Id", "CurrentRoomId", "Email", "IsDisabled", "Login", "Name", "Password", "Patronymic", "PositionId", "RoleId", "Surname" },
+                values: new object[] { 1, 1, "admin@admin.com", false, "Admin", "Admin", "10000.E1oWoDmucer3gKs31Cd1NA==.acfwsZcyNgPBDPw7KDCwtPp6g7lVZCYfVBMJppZtaQQ=", "Admin", 1, 1, "Admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AccessLevelCheckpoint_CheckpointsId",

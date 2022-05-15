@@ -101,5 +101,21 @@ namespace Application.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeleteCheckpoint(int roomId)
+        {
+            if(_roomService.IsRoomEmpty(roomId))
+            {
+                _roomService.Delete(roomId);
+                return Rooms();
+            }
+            else
+            {
+                ModelState.AddModelError("", "В комнате присутствуют люди!\n Для удаления в комнате должны отсутствовать люди!");
+                return View();
+            }
+        }
     }
 }

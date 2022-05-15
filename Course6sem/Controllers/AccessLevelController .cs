@@ -1,4 +1,5 @@
 ﻿using Application.Models.AccessLevel;
+using Application.Models.Admin;
 using Business.Models;
 using Business.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -8,11 +9,11 @@ namespace Application.Controllers
 {
     public class AccessLevelController : Controller
     {
-        private readonly IAccessLevelService _AccessLevelService;
+        private readonly IAccessLevelService _accessLevelService;
 
         public AccessLevelController(IAccessLevelService AccessLevelService)
         {
-            _AccessLevelService = AccessLevelService;
+            _accessLevelService = AccessLevelService;
         }
 
         public IActionResult Index()
@@ -26,7 +27,7 @@ namespace Application.Controllers
         {
             var viewModel = new AccessLevelListResponse();
 
-            viewModel.AccessLevels = _AccessLevelService.GetAll();
+            viewModel.AccessLevels = _accessLevelService.GetAll();
 
             return View("AccessLevelList", viewModel);
         }
@@ -44,9 +45,9 @@ namespace Application.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_AccessLevelService.ReadByName(model.Name) is null)
+                if (_accessLevelService.ReadByName(model.Name) is null)
                 {
-                    var AccessLevel = _AccessLevelService.Create(new AccessLevel()
+                    var AccessLevel = _accessLevelService.Create(new AccessLevel()
                     {
                         Name = model.Name
                     });
@@ -63,7 +64,7 @@ namespace Application.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult EditAccessLevel(int accessLevelId)
         {
-            var AccessLevel = _AccessLevelService.Get(accessLevelId);
+            var AccessLevel = _accessLevelService.Get(accessLevelId);
 
             var editAccessLevelRequest = new EditAccessLevelRequest
             {
@@ -80,11 +81,11 @@ namespace Application.Controllers
         {
             if (ModelState.IsValid)
             {
-                var AccessLevelByName = _AccessLevelService.ReadByName(model.Name);
+                var AccessLevelByName = _accessLevelService.ReadByName(model.Name);
 
                 if (AccessLevelByName is null || AccessLevelByName.Id == model.Id)
                 {
-                    _AccessLevelService.Update(new AccessLevel
+                    _accessLevelService.Update(new AccessLevel
                     {
                         Id = model.Id,
                         Name = model.Name
@@ -96,6 +97,15 @@ namespace Application.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeleteAccessLevel(int accessLevelId)
+        {
+            _accessLevelService.Delete(accessLevelId);
+
+            return AccessLevels();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Data.Models
 {
@@ -17,6 +18,7 @@ namespace Data.Models
         public string Description { get; set; }
 
         public virtual ICollection<AccessLevel> AccessLevels { get; set; } = new List<AccessLevel>();
+        [JsonIgnore]
         public virtual ICollection<Room> Rooms { get; set; } = new List<Room>();
     }
 }

@@ -8,11 +8,11 @@ namespace Application.Controllers
 {
     public class PositionController : Controller
     {
-        private readonly IPositionService _PositionService;
+        private readonly IPositionService _positionService;
 
         public PositionController(IPositionService PositionService)
         {
-            _PositionService = PositionService;
+            _positionService = PositionService;
         }
 
         public IActionResult Index()
@@ -26,7 +26,7 @@ namespace Application.Controllers
         {
             var viewModel = new PositionListResponse();
 
-            viewModel.Positions = _PositionService.GetAll();
+            viewModel.Positions = _positionService.GetAll();
 
             return View("PositionList", viewModel);
         }
@@ -44,9 +44,9 @@ namespace Application.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_PositionService.ReadByName(model.Name) is null)
+                if (_positionService.ReadByName(model.Name) is null)
                 {
-                    var Position = _PositionService.Create(new Position()
+                    var Position = _positionService.Create(new Position()
                     {
                         Name = model.Name
                     });
@@ -63,7 +63,7 @@ namespace Application.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult EditPosition(int positionId)
         {
-            var Position = _PositionService.Get(positionId);
+            var Position = _positionService.Get(positionId);
 
             var editPositionRequest = new EditPositionRequest
             {
@@ -80,11 +80,11 @@ namespace Application.Controllers
         {
             if (ModelState.IsValid)
             {
-                var PositionByName = _PositionService.ReadByName(model.Name);
+                var PositionByName = _positionService.ReadByName(model.Name);
 
                 if (PositionByName is null || PositionByName.Id == model.Id)
                 {
-                    _PositionService.Update(new Position
+                    _positionService.Update(new Position
                     {
                         Id = model.Id,
                         Name = model.Name
@@ -96,6 +96,15 @@ namespace Application.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeletePosition(int positionId)
+        {
+            _positionService.Delete(positionId);
+
+            return Positions();
         }
     }
 }

@@ -19,9 +19,7 @@ namespace Data.Models
 
         [ForeignKey("RoomId")]
         public virtual Room Room { get; set; }
-        //[ForeignKey("EnterPassageDateId")]
         public virtual PassageDate EnterPassageDate { get; set; }
-        //[ForeignKey("ExitPassageDateId")]
         public virtual PassageDate ExitPassageDate { get; set; }
     }
 }

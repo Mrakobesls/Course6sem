@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Data.Models
 {
@@ -13,6 +14,8 @@ namespace Data.Models
         [Required]
         [Column(TypeName = "nvarchar(20)")]
         public string Name { get; set; }
+
+        [JsonIgnore]
         public virtual ICollection<User> Users { get; set; }
     }
 }

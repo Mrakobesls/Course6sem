@@ -5,6 +5,9 @@
             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index" title="Manage">Привет @User.Identity.Name!</a>
         </li>
         <li class="nav-item nav-link text-dark">
+            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ChangePassword" title="Manage">Изменить пароль</a>
+        </li>
+        <li class="nav-item nav-link text-dark">
             <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Logout" title="Manage">Выход</a>
         </li>
     }

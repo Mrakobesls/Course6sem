@@ -30,7 +30,8 @@ namespace Business.Services
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            Uow.AccessLevels.Delete(id);
+            Uow.SaveChanges();
         }
 
         public void Update(AccessLevel entity)
